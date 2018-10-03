@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="display-and-sort" page-range-format="chicago">
   <info>
-    <title>Chicago Manual of Style 17th edition (full note, with Ibid.)</title>
-    <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid</id>
-    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid" rel="self"/>
+    <title>Chicago Manual of Style 17th edition (full note, with Ibid., with op. cit.)</title>
+    <id>http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid-opcit</id>
+    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid" rel="template"/>
+    <link href="http://www.zotero.org/styles/chicago-fullnote-bibliography-with-ibid-opcit" rel="self"/>
     <link href="http://www.chicagomanualofstyle.org/tools_citationguide.html" rel="documentation"/>
     <author>
-      <name>Julian Onions</name>
-      <email>julian.onions@gmail.com</email>
+      <name>Joé Schaul</name>
+      <email>joe.schaul@gmail.com</email>
     </author>
-    <contributor>
-      <name>Simon Kornblith</name>
-      <email>simon@simonster.com</email>
-    </contributor>
-    <contributor>
-      <name>Elena Razlogova</name>
-      <email>elena.razlogova@gmail.com</email>
-    </contributor>
-    <contributor>
-      <name>Frank Bennett</name>
-      <email>biercenator@gmail.com</email>
-    </contributor>
-    <contributor>
-      <name>Andrew Dunning</name>
-      <email>andrew.dunning@utoronto.ca</email>
-    </contributor>
     <category citation-format="note"/>
     <category field="generic-base"/>
-    <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2018-05-22T00:59:23+00:00</updated>
+    <summary>Chicago format with full notes and bibliography, using Ibid. and op. cit.</summary>
+    <updated>2018-01-12T20:15:37+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -1295,6 +1280,28 @@
       </if>
     </choose>
   </macro>
+  <macro name="subsequent-short">
+    <group delimiter=", ">
+      <text macro="contributors-short"/>
+      <group delimiter=" ">
+        <group delimiter=", ">
+          <text macro="title-short"/>
+          <!--if title & author are the same: -->
+          <text macro="date-disambiguate"/>
+          <text macro="case-locator-subsequent"/>
+          <group delimiter=", ">
+            <text value="op. cit." font-style="italic" text-case="capitalize-first"/>
+          </group>
+        </group>
+        <text macro="case-pinpoint-subsequent"/>
+      </group>
+      <choose>
+        <if match="none" type="legal_case">
+          <text macro="point-locators-subsequent"/>
+        </if>
+      </choose>
+    </group>
+  </macro>
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true">
     <layout suffix="." delimiter="; ">
       <choose>
@@ -1307,24 +1314,14 @@
         <else-if position="ibid">
           <text term="ibid"/>
         </else-if>
-        <else-if position="subsequent">
-          <group delimiter=", ">
-            <text macro="contributors-short"/>
-            <group delimiter=" ">
-              <group delimiter=", ">
-                <text macro="title-short"/>
-                <!--if title & author are the same: -->
-                <text macro="date-disambiguate"/>
-                <text macro="case-locator-subsequent"/>
-              </group>
-              <text macro="case-pinpoint-subsequent"/>
-            </group>
-            <choose>
-              <if match="none" type="legal_case">
-                <text macro="point-locators-subsequent"/>
-              </if>
-            </choose>
-          </group>
+        <else-if position="subsequent" type="book" match="all">
+          <text macro="subsequent-short"/>
+        </else-if>
+        <else-if position="subsequent" type="chapter" match="all">
+          <text macro="subsequent-short"/>
+        </else-if>
+        <else-if position="subsequent" type="article-journal" match="all">
+          <text macro="subsequent-short"/>
         </else-if>
         <else>
           <group delimiter=", ">
